@@ -1,6 +1,6 @@
 import pyglet as pg
 from pyglet.window import key
-import cell, agent
+import cell, agent, random
 # Create a window  
 window = pg.window.Window(width = 624, height = 624)
 
@@ -40,6 +40,15 @@ def draw(dt):
     window.clear()
     for i in tileArray:
         i.update()
+    randNumb = random.randint(0,3)
+    if randNumb == 0:
+        player.moveRight()
+    elif randNumb == 1:
+        player.moveLeft()
+    elif randNumb == 2:
+        player.moveUp()
+    elif randNumb == 3:
+        player.moveDown()
     player.update()
     
 
