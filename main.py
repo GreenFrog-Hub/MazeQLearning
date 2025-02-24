@@ -1,9 +1,9 @@
 import pyglet as pg
 from pyglet.window import key
 import cell, agent, random
+from time import sleep
 # Create a window  
 window = pg.window.Window(width = 624, height = 624)
-
 
 maze = ["WWWWWWWWWWWW",
         "W          W",
@@ -49,7 +49,10 @@ def draw(dt):
         player.moveUp()
     elif randNumb == 3:
         player.moveDown()
+    if tileArray[player.getPos()].cellType == "G":
+        player.setPos(1,1)
     player.update()
+    #sleep(0.1)
     
 
 pg.clock.schedule_interval(draw, 1/60)
