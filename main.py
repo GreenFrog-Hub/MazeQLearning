@@ -2,6 +2,8 @@ import pyglet as pg
 from pyglet.window import key
 import cell, agent, random
 from time import sleep
+import Training
+
 # Create a window  
 window = pg.window.Window(width = 624, height = 624)
 
@@ -24,6 +26,8 @@ for i in range(0,len(maze)):
 
 player = agent.Agent(grid=maze)
 
+QLearn = Training.train(10000, tileArray)
+
 @window.event
 def on_key_press(symbol, modifiers):
     if symbol == key.D:
@@ -40,14 +44,14 @@ def draw(dt):
     window.clear()
     for i in tileArray:
         i.update()
-    randNumb = random.randint(0,3)
-    if randNumb == 0:
+    action = QLearn.chooseAction()
+    if action == 1:
         player.moveRight()
-    elif randNumb == 1:
+    elif action == 2:
         player.moveLeft()
-    elif randNumb == 2:
+    elif action == 3:
         player.moveUp()
-    elif randNumb == 3:
+    elif action == 4:
         player.moveDown()
     if tileArray[player.getPos()].cellType == "G":
         player.setPos(1,1)
