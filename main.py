@@ -24,40 +24,50 @@ for i in range(0,len(maze)):
         for j in range(0,len(maze[i])):
             tileArray.append(cell.cell(maze[i][j],j,i))
 
-player = agent.Agent(grid=maze)
+lermin = agent.Agent(grid=maze)
 
 QLearn = Training.train(10000, tileArray)
 
 @window.event
 def on_key_press(symbol, modifiers):
     if symbol == key.D:
-        player.moveRight()
+        lermin.moveRight()
     elif symbol == key.A:
-        player.moveLeft()
+        lermin.moveLeft()
     elif symbol == key.W:
-        player.moveUp()
+        lermin.moveUp()
     elif symbol == key.S:
-        player.moveDown()
+        lermin.moveDown()
+    elif symbol == key.Q:
+        QLearn.printQTable()
         
 
 def draw(dt):
     window.clear()
     for i in tileArray:
         i.update()
-    action = QLearn.chooseAction()
+    action = 0
+    action = QLearn.chooseAction(lermin.getPos())
     if action == 1:
-        player.moveRight()
+        lermin.moveRight()
     elif action == 2:
-        player.moveLeft()
+        lermin.moveLeft()
     elif action == 3:
-        player.moveUp()
+        lermin.moveUp()
     elif action == 4:
-        player.moveDown()
-    if tileArray[player.getPos()].cellType == "G":
-        player.setPos(1,1)
-    player.update()
+        lermin.moveDown()
+    elif action > 4:
+        print("shit")
+    if action != -1:
+        QLearn.updateQTable(lermin.getPos())
+    else:
+        lermin.setPos(1,1)
+        QLearn.nextEpisode()
+    if tileArray[lermin.getPos()].cellType == "G":
+        lermin.setPos(1,1)
+    lermin.update()
     #sleep(0.1)
     
 
-pg.clock.schedule_interval(draw, 1/60)
+pg.clock.schedule_interval(draw, 1/1200)
 pg.app.run()

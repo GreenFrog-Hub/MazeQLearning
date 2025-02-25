@@ -9,7 +9,7 @@ class cell:
             self.weightLabel = pg.text.Label(text="",x=x*52+26,y=y*52+26, anchor_x="center", anchor_y="center", color=self.colour)
         elif self.cellType == "G":
             self.colour = (0,255,0,255)
-            self.weightLabel = pg.text.Label(text=str(self.weight),anchor_x="center", anchor_y="center",x=x*52+26, y=572-(y*52)+26, color=(0,0,0,255), font_size=7)
+            self.weightLabel = pg.text.Label(text="",anchor_x="center", anchor_y="center",x=x*52+26, y=572-(y*52)+26, color=self.colour, font_size=7)
         else:
             self.colour = (255,255,255,255)
             self.weightLabel = pg.text.Label(text=str(self.weight),anchor_x="center", anchor_y="center",x=x*52+26, y=572-(y*52)+26, color=(0,0,0,255), font_size=7)
@@ -20,4 +20,5 @@ class cell:
     
     def update(self):
         self.shape.draw()
+        self.weightLabel.text = str(round(self.weight, 3))
         self.weightLabel.draw()
