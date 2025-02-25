@@ -60,6 +60,9 @@ class train:
             self.nextEpisode()
         elif self.tileArray[playerPos].cellType == " ":
             self.reward = -0.5
+        elif self.tileArray[playerPos].cellType == "O":
+            self.reward = -1000
+            self.nextEpisode()
         else:
             self.reward = 0
             print("whoops")
