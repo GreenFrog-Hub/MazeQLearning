@@ -47,7 +47,7 @@ def on_mouse_press(x, y, button, modifiers):
 
 #lermin = agent.Agent(grid=maze)
 lermins = []
-for i in range(0,40):
+for i in range(0,25):
     lermins.append(agent.Agent(grid=maze))
 
 QLearn = Training.train(10000, tileArray)
