@@ -13,7 +13,7 @@ class train:
 
         self.maxExplorationProb = 1
         self.minExplorationProb = 0.00
-        self.decayFactor = 0.01
+        self.decayFactor = 0.005
 
         self.maxEpochs = maxEpochs
         self.epoch = 0
@@ -56,10 +56,10 @@ class train:
         self.gridPos.append(playerPos//20)
         self.currentState = self.gridPos[0]-1 + (self.gridPos[1]-1) * 18
         if self.tileArray[playerPos].cellType == "G":
-            self.reward = 1000
+            self.reward = 100000
             self.nextEpisode()
         elif self.tileArray[playerPos].cellType == " ":
-            self.reward = -0.5
+            self.reward = -10
         elif self.tileArray[playerPos].cellType == "O":
             self.reward = -1000
             self.nextEpisode()

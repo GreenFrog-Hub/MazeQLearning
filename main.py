@@ -1,5 +1,5 @@
 import pyglet as pg
-from pyglet.window import key
+from pyglet.window import key, mouse
 import cell, agent, random
 from time import sleep
 import Training
@@ -38,16 +38,24 @@ start = False
 def on_mouse_press(x, y, button, modifiers):
     xCoord = int(x//52)
     yCoord = int((1040-y)//52)
-    if maze[yCoord][xCoord] == " " and start == False:
-        s = list(maze[yCoord])
-        s[xCoord] = "O"
-        maze[yCoord] = "".join(s)
+    if maze[yCoord][xCoord] != "W" and maze[yCoord][xCoord] != "G" and start == False:
+        if button == mouse.LEFT:
+            s = list(maze[yCoord])
+            s[xCoord] = "O"
+            maze[yCoord] = "".join(s)
 
-        tileArray[yCoord*20 + xCoord] = cell.cell("O", xCoord, yCoord)
+            tileArray[yCoord*20 + xCoord] = cell.cell("O", xCoord, yCoord)
+        elif button == mouse.RIGHT:
+            print("right")
+            s = list(maze[yCoord])
+            s[xCoord] = " "
+            maze[yCoord] = "".join(s)
+
+            tileArray[yCoord*20 + xCoord] = cell.cell(" ", xCoord, yCoord)
 
 #lermin = agent.Agent(grid=maze)
 lermins = []
-for i in range(0,25):
+for i in range(0,200):
     lermins.append(agent.Agent(grid=maze))
 
 QLearn = Training.train(10000, tileArray)
