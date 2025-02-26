@@ -3,9 +3,9 @@ import random
 
 class train:
     def __init__(self, maxEpochs, tileArray):
-        self.states = 100
+        self.states = 324
         self.actions = 4
-        self.goalState = 100
+        self.goalState = 324
         self.QTable = np.zeros((self.states,self.actions))
 
         self.discount = 0.95
@@ -29,32 +29,32 @@ class train:
     def nextEpisode(self):
         self.episode +=1
         
-        print(self.episode,"-",self.steps)
+        #print(self.episode,"-",self.steps)
         self.steps=0
 
     def chooseAction(self, playerPos):
         self.action = 0
         self.prevPlayerPos = playerPos
         self.gridPos = []
-        self.gridPos.append(playerPos%12)
-        self.gridPos.append(playerPos//12)
-        self.currentState = self.gridPos[0]-1 + (self.gridPos[1]-1) * 10
+        self.gridPos.append(playerPos%20)
+        self.gridPos.append(playerPos//20)
+        self.currentState = self.gridPos[0]-1 + (self.gridPos[1]-1) * 18
         explorationProb = self.minExplorationProb + (self.maxExplorationProb - self.minExplorationProb)* np.exp(-self.decayFactor*self.episode)
         self.steps += 1
         if random.uniform(0,1) < explorationProb:
             self.action = random.randint(1,self.actions)
         else:
             self.action = np.argmax(self.QTable[self.currentState])+1
-        if self.steps > 132:
+        if self.steps > 128:
             self.action = -1
         return self.action
 
     def updateQTable(self, playerPos):
         self.prevPos = self.currentState
         self.gridPos = []
-        self.gridPos.append(playerPos%12)
-        self.gridPos.append(playerPos//12)
-        self.currentState = self.gridPos[0]-1 + (self.gridPos[1]-1) * 10
+        self.gridPos.append(playerPos%20)
+        self.gridPos.append(playerPos//20)
+        self.currentState = self.gridPos[0]-1 + (self.gridPos[1]-1) * 18
         if self.tileArray[playerPos].cellType == "G":
             self.reward = 1000
             self.nextEpisode()
